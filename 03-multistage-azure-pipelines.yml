@@ -14,7 +14,7 @@ stages:
     - job: job1
       steps:
       - script: echo Hello, world!
-- stage: Devploy
+- stage: DevDeploy
   dependsOn: Build
   jobs:
     - job: job1
