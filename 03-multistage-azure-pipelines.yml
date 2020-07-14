@@ -23,7 +23,7 @@ stages:
 - stage: QADeploy
   dependsOn:
   - Build
-  - DevDeploy
+  - ProdDeploy
   jobs:
     - job: job1
       steps:
