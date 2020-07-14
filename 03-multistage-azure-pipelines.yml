@@ -28,7 +28,7 @@ stages:
             **/*.yaml
             **/*.tf
           TargetFolder: '$(Build.ArtifactStagingDirectory)'
-      - bash: $(Build.ArtifactStagingDirectory)
+     
 # - stage: DevDeploy
 #   variables: 
 #    environment: Dev
