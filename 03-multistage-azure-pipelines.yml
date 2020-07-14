@@ -14,33 +14,47 @@ stages:
     - job: job1
       steps:
       - bash: echo Build Firstjob
+      - bash: echo $(Build.ArtifactStagingDirectory)
       - bash: echo $(PipelineLevelVariable)
-- stage: DevDeploy
-  variables: 
-   environment: Dev
-  dependsOn: Build
-  jobs:
-    - job: job1
-      steps:
-      - bash: echo Build FirstJob
-      - bash: echo $(environment)DevDeploy
-- stage: QADeploy
-  variables:
-    environment: Dev
-  dependsOn: Build
-  jobs:
-    - job: job1
-      steps:
-      - bash: echo Hello, world!
-      - bash: echo $(environment)DevDeploy
-- stage: ProdDeploy
-  variables:
-    envioronment: Dev
-  dependsOn: 
-  - DevDeploy
-  - QADeploy
-  jobs:
-    - job: job1
-      steps:
-      - script: echo Hello, world!
+      - bash: java -version
+      - bash: node --version
+      - bash: echo $(System.DefaultWorkingDirectory)
+      - bash: ls -R $(System.DefaultWorkingDirectory)
+      - bash: ls -R $(Build.ArtifactStagingDirectory)
+      - task: CopyFiles@2
+        inputs:
+          SourceFolder: '$(System.DefaultWorkingDirectory)'
+          Contents: |
+            **/*.yaml
+            **/*.tf
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      - bash: $(Build.ArtifactStagingDirectory)
+# - stage: DevDeploy
+#   variables: 
+#    environment: Dev
+#   dependsOn: Build
+#   jobs:
+#     - job: job1
+#       steps:
+#       - bash: echo Build FirstJob
+#       - bash: echo $(environment)DevDeploy
+# - stage: QADeploy
+#   variables:
+#     environment: Dev
+#   dependsOn: Build
+#   jobs:
+#     - job: job1
+#       steps:
+#       - bash: echo Hello, world!
+#       - bash: echo $(environment)DevDeploy
+# - stage: ProdDeploy
+#   variables:
+#     envioronment: Dev
+#   dependsOn: 
+#   - DevDeploy
+#   - QADeploy
+#   jobs:
+#     - job: job1
+#       steps:
+#       - script: echo Hello, world!
       
